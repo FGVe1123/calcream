@@ -17,6 +17,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/tailwind', function(){
+    return view('pruebatailwind');
+});
+
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
