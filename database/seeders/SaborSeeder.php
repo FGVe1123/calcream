@@ -2,8 +2,9 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Sabor;
 use Illuminate\Database\Seeder;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class SaborSeeder extends Seeder
 {
@@ -14,6 +15,10 @@ class SaborSeeder extends Seeder
      */
     public function run()
     {
-        //
+        Sabor::create(['sabor' => 'Fresa']);
+        Sabor::create(['sabor' => 'Elote']);
+        Sabor::create(['sabor' => 'Chocolate']);
+        Sabor::create(['sabor' => 'Vainilla']);
+        Sabor::create(['sabor' => 'Nuez']);
     }
 }
