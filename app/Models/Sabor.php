@@ -10,5 +10,5 @@ class Sabor extends Model
     use HasFactory;
 
     public $timestamps = false;
-    protected $fillable = ('sabor');
+    protected $fillable = ['sabor'];
 }

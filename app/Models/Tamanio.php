@@ -10,5 +10,5 @@ class Tamanio extends Model
     use HasFactory;
 
     public $timestamps = false;
-    protected $fillable = ('tamanio');
+    protected $fillable = ['tamanio'];
 }
