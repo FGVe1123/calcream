@@ -11,4 +11,9 @@ class Tamanio extends Model
 
     public $timestamps = false;
     protected $fillable = ['tamanio'];
+
+    public function tamanio()
+    {
+        return $this->belongsTo(Producto::class);
+    }
 }

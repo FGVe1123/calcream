@@ -11,4 +11,9 @@ class Sabor extends Model
 
     public $timestamps = false;
     protected $fillable = ['sabor'];
+
+    public function sabor()
+    {
+        return $this->belongsTo(Producto::class);
+    }
 }

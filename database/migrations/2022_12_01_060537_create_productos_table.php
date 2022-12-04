@@ -17,6 +17,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('sabor_id')->constrained();
             $table->foreignId('tamanio_id')->constrained();
+            $table->string('sabor',50);
+            $table->string('tamanio',10);
             $table->double('precio', 8, 2);
             $table->smallinteger('stock');
             

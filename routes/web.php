@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProductoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,9 +18,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/tailwind', function(){
-    return view('pruebatailwind');
-});
+Route::resource('producto', ProductoController::class);
+Route::resource('sabor', SaborController::class);
 
 Route::middleware([
     'auth:sanctum',

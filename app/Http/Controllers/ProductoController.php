@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Sabor;
+use App\Models\Tamanio;
+
 use App\Models\Producto;
 use Illuminate\Http\Request;
 
@@ -14,7 +17,8 @@ class ProductoController extends Controller
      */
     public function index()
     {
-        //
+        $productos = Producto::with('sabor', 'tamanio');
+        return view('producto.productoIndex', compact('productos'));
     }
 
     /**
@@ -24,7 +28,9 @@ class ProductoController extends Controller
      */
     public function create()
     {
-        //
+        $sabores = Sabor::all();
+        $tamanios = Tamanio::all();
+        return view('producto.productoCreate', compact ('sabores', 'tamanios'));
     }
 
     /**
@@ -35,7 +41,22 @@ class ProductoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //dd($request->all());
+        $request -> validate([
+            'sabor' => 'required',
+            'tamanio' => 'required',            
+            'precio' => 'required|integer',
+            'stock' => 'required|integer',
+        ]);
+    
+        $producto = Producto::create($request->all());
+
+        $request->merge(['sabor_id']);
+        $request->merge(['tamanio_id']);
+        //$producto->sabores()->attach($request->sabores_id);
+        //$producto->tamanios()->attach($request->tamanios_id);
+
+        return redirect('/producto');
     }
 
     /**
@@ -46,7 +67,7 @@ class ProductoController extends Controller
      */
     public function show(Producto $producto)
     {
-        //
+        return view('productos.productosShow', compact('producto'));
     }
 
     /**
@@ -57,7 +78,7 @@ class ProductoController extends Controller
      */
     public function edit(Producto $producto)
     {
-        //
+        return view('productos.productosEdit', compact('producto'));
     }
 
     /**
@@ -69,7 +90,15 @@ class ProductoController extends Controller
      */
     public function update(Request $request, Producto $producto)
     {
-        //
+        $request -> validate([
+            'existencia' => 'integer',
+            'nombre' => 'required|max:100|min:3',
+            'modelo' => ' required|max:50',
+            'precio' => 'integer',
+        ]);
+
+        Producto::where('id', $producto->id)->update($request->except('_token', '_method' ,'editar'));
+        return redirect ('/producto');
     }
 
     /**
@@ -80,6 +109,13 @@ class ProductoController extends Controller
      */
     public function destroy(Producto $producto)
     {
-        //
+        $producto->delete();
+
+        return redirect('/producto');
+    }
+
+    public function __construct()
+    {
+        $this->middleware('auth')->except('index', 'show','borrar');
     }
 }

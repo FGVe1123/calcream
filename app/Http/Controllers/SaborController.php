@@ -14,7 +14,8 @@ class SaborController extends Controller
      */
     public function index()
     {
-        //
+        $sabores = Producto::with('sabor');
+        return view('sabor.saborIndex', compact('sabores'));
     }
 
     /**
@@ -24,7 +25,8 @@ class SaborController extends Controller
      */
     public function create()
     {
-        //
+        $sabores = Sabor::all();
+        return view('sabor.saborCreate', compact ('sabores', 'tamanios'));
     }
 
     /**
@@ -35,7 +37,14 @@ class SaborController extends Controller
      */
     public function store(Request $request)
     {
-        //
+         //dd($request->all());
+         $request -> validate([
+            'sabor' => 'required'
+        ]);
+    
+        $sabor = Sabor::create($request->all());
+
+        return redirect('/sabor');
     }
 
     /**
@@ -46,7 +55,7 @@ class SaborController extends Controller
      */
     public function show(Sabor $sabor)
     {
-        //
+        return view('sabor.saborShow', compact('sabor'));
     }
 
     /**
@@ -57,7 +66,7 @@ class SaborController extends Controller
      */
     public function edit(Sabor $sabor)
     {
-        //
+        return view('sabor.saborEdit', compact('sabor'));
     }
 
     /**
@@ -69,7 +78,12 @@ class SaborController extends Controller
      */
     public function update(Request $request, Sabor $sabor)
     {
-        //
+        $request -> validate([
+            'sabor' => 'required'
+        ]);
+
+        Sabor::where('id', $sabor->id)->update($request->except('_token', '_method' ,'editar'));
+        return redirect ('/sabor');
     }
 
     /**
@@ -80,6 +94,16 @@ class SaborController extends Controller
      */
     public function destroy(Sabor $sabor)
     {
-        //
+        $sabor->delete();
+
+        return redirect('/sabor');
     }
+
+    public function __construct()
+    {
+        $this->middleware('auth')->except('index', 'show','borrar');
+    }
+
+
+
 }
